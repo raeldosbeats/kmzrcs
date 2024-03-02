@@ -66,7 +66,7 @@ function selecionaArea() {
 function convertCSVtoLeaflet() {
     const local = searchUF.value
 
-    const url = '../../main/csv/' + local + '.csv'
+    const url = '../main/csv/' + local + '.csv'
 
     //### utilizando papaparse
     Papa.parse(url, {
