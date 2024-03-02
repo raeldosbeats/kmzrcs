@@ -65,13 +65,22 @@ function selecionaArea() {
 //### Função que converte csv para um kml com seus poligonos
 function convertCSVtoLeaflet() {
 
+    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT3uOW-6dZUiq03NHxs1KxhR5NkSX0B07O2c_QeOYP3hxn_vqOK9gFsK4aeEPs6_zbolxZsZeLZh7SC/pub?output=csv'
+
+    //### Puxando dados do google planilhas
+    fetch(url)
+        .then(response => response.text())
+        .then(data => {
+
     //### utilizando papaparse
-    Papa.parse('https://drive.google.com/uc?id=1TTE7W6jSxx1qt-aIUn7EsE1o9TqC2Aax&export=download', {
-        download: true,
+    Papa.parse(data, {
+        //download: true,
         header: true,
-        delimiter: ';',
+        delimiter: ',',
         complete: function (results) {
             results.data.forEach(function (row) {
+
+                console.log(data);
 
                 if (row.coordinates && row.uf === searchUF.value) {
                     var coordinates = row.coordinates.split(' ').map(function (coord) {
@@ -83,7 +92,7 @@ function convertCSVtoLeaflet() {
                     var pAchievement = row.achievement.replace(',', '.');
                     var pOcup = row.ocup.replace(',', '.');
                     var fillColor;
-                    
+
                     if (pAchievement >= 0 && pAchievement < 0.5) {
                         fillColor = 'red';
                     } else if (pAchievement >= 0.5 && pAchievement < 0.8) {
@@ -121,4 +130,9 @@ function convertCSVtoLeaflet() {
             });
         }
     });
+})
+.catch(error => console.error('Erro ao buscar o arquivo CSV:', error));
+
 }
+
+
