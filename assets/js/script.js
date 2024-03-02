@@ -66,7 +66,7 @@ function selecionaArea() {
 function convertCSVtoLeaflet() {
 
     //### utilizando papaparse
-    Papa.parse('./csv/data.csv', {
+    Papa.parse('../csv/data.csv', {
         download: true,
         header: true,
         delimiter: ';',
