@@ -67,15 +67,18 @@ function convertCSVtoLeaflet() {
     const local = searchUF.value
     const url = 'https://raw.githubusercontent.com/raeldosbeats/kmzrcs/main/csv/' + local + '.csv'
 
+    fetch(url)
+    .then(response => response.text())
+    .then(csvData => {
+    // Parse do CSV usando Papa Parse
+      
     //### utilizando papaparse
-    Papa.parse(url, {
+    Papa.parse(csvData, {
         //download: true,
         header: true,
         delimiter: ',',
         complete: function (results) {
             results.data.forEach(function (row) {
-
-                console.log(url);
 
                 if (row.coordinates && row.uf === searchUF.value) {
                     var coordinates = row.coordinates.split(' ').map(function (coord) {
@@ -125,6 +128,8 @@ function convertCSVtoLeaflet() {
             });
         }
     });
+  })
+  .catch(error => console.error('Erro ao buscar o arquivo CSV:', error));
 }
 
 
