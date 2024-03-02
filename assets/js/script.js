@@ -69,7 +69,7 @@ function convertCSVtoLeaflet() {
 
     //### utilizando papaparse
     Papa.parse(url, {
-        download: true,
+        //download: true,
         header: true,
         delimiter: ',',
         complete: function (results) {
