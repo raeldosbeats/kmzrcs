@@ -64,23 +64,19 @@ function selecionaArea() {
 
 //### Função que converte csv para um kml com seus poligonos
 function convertCSVtoLeaflet() {
+    const local = searchUF.value
 
-    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT3uOW-6dZUiq03NHxs1KxhR5NkSX0B07O2c_QeOYP3hxn_vqOK9gFsK4aeEPs6_zbolxZsZeLZh7SC/pub?output=csv'
-
-    //### Puxando dados do google planilhas
-    fetch(url)
-        .then(response => response.text())
-        .then(data => {
+    const url = '../csv/' + local + '.csv'
 
     //### utilizando papaparse
-    Papa.parse(data, {
-        //download: true,
+    Papa.parse(url, {
+        download: true,
         header: true,
         delimiter: ',',
         complete: function (results) {
             results.data.forEach(function (row) {
 
-                console.log(data);
+                console.log(url);
 
                 if (row.coordinates && row.uf === searchUF.value) {
                     var coordinates = row.coordinates.split(' ').map(function (coord) {
@@ -130,9 +126,6 @@ function convertCSVtoLeaflet() {
             });
         }
     });
-})
-.catch(error => console.error('Erro ao buscar o arquivo CSV:', error));
-
 }
 
 
